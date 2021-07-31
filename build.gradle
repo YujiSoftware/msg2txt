@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.apache.poi.examples.hsmf'
+version '1.0.0'
+
+mainClassName = "org.apache.poi.examples.hsmf.Msg2txt"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.apache.poi', name: 'poi-scratchpad', version: '5.0.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.apache.poi.examples.hsmf.Msg2txt',
+                "Class-Path": configurations.runtimeClasspath.collect { it.getName() }.join(' ')
+        )
+    }
+    doFirst {
+        delete fileTree("${buildDir}/libs")
+    }
+    doLast {
+        copy {
+            from configurations.runtimeClasspath
+            into "${buildDir}/libs"
+        }
+    }
+}
+
+task packageForWin(group: 'build', description: 'Packaging self-contained Java applications.', type: Exec) {
+    dependsOn "jar"
+    inputs.dir file("${buildDir}/libs")
+    outputs.dir file("${buildDir}/packages")
+
+    commandLine (
+            "jpackage",
+            "--name", "msg2txt",
+            "--app-version", version,
+            "--input", "${buildDir}/libs",
+            "--main-jar", "msg2txt-" + version + ".jar",
+            "--dest", "${buildDir}/packages",
+            "--win-console",
+            "--win-shortcut",
+            "--verbose",
+    )
+
+    doFirst {
+        delete fileTree("${buildDir}/packages")
+    }
+}
