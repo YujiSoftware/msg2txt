@@ -31,7 +31,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew jpackage
+        run: ./gradlew jpackage assemble
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
@@ -40,7 +40,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: artifact
-          path: build/packages/*.deb
+          path: |
+            build/distributions/*
+            build/packages/*.deb
 
   build_mac:
     name: Packaging for macOS.
