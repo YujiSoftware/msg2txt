@@ -41,7 +41,27 @@ jar {
     }
 }
 
-task jpackage(group: 'build', description: 'Packaging self-contained Java applications.', type: Exec) {
+task jpackageForLinux(group: 'build', description: 'Packaging self-contained Java applications for Linux.', type: Exec) {
+    dependsOn "jar"
+    inputs.dir file("${buildDir}/libs")
+    outputs.dir file("${buildDir}/packages")
+
+    commandLine (
+            "jpackage",
+            "--name", "msg2txt",
+            "--app-version", version,
+            "--input", "${buildDir}/libs",
+            "--main-jar", "msg2txt-" + version + ".jar",
+            "--dest", "${buildDir}/packages",
+            "--verbose",
+    )
+
+    doFirst {
+        delete fileTree("${buildDir}/packages")
+    }
+}
+
+task jpackageForMacOS(group: 'build', description: 'Packaging self-contained Java applications for macOS.', type: Exec) {
     dependsOn "jar"
     inputs.dir file("${buildDir}/libs")
     outputs.dir file("${buildDir}/packages")
