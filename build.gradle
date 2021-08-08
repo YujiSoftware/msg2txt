@@ -53,6 +53,7 @@ task jpackageForLinux(group: 'build', description: 'Packaging self-contained Jav
             "--input", "${buildDir}/libs",
             "--main-jar", "msg2txt-" + version + ".jar",
             "--dest", "${buildDir}/packages",
+            "--description", "Extract .msg file (Outlook mail file) to text file.",
             "--verbose",
     )
 
@@ -74,6 +75,7 @@ task jpackageForMacOS(group: 'build', description: 'Packaging self-contained Jav
             "--input", "${buildDir}/libs",
             "--main-jar", "msg2txt-" + version + ".jar",
             "--dest", "${buildDir}/packages",
+            "--description", "Extract .msg file (Outlook mail file) to text file.",
             "--verbose",
     )
 
@@ -95,6 +97,7 @@ task jpackageForWindows(group: 'build', description: 'Packaging self-contained J
             "--input", "${buildDir}/libs",
             "--main-jar", "msg2txt-" + version + ".jar",
             "--dest", "${buildDir}/packages",
+            "--description", "Extract .msg file (Outlook mail file) to text file.",
             "--win-console",
             "--win-shortcut",
             "--verbose",
