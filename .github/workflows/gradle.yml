@@ -85,7 +85,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Build with Gradle
-        run: ./gradlew.bat jpackageForWindows
+        run: ./gradlew.bat --no-daemon jpackageForWindows
       - name: Cleanup Gradle Cache
         run: |
           rm -Force ~/.gradle/caches/modules-2/modules-2.lock
