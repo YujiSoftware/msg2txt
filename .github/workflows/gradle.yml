@@ -36,6 +36,11 @@ jobs:
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
+      - name: Upload package file
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: build/packages/*.deb
 
   build_mac:
     name: Packaging for macOS.
@@ -64,6 +69,11 @@ jobs:
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
+      - name: Upload package file
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: build/packages/*.dmg
 
   build_windows:
     name: Packaging for Windows.
@@ -90,3 +100,8 @@ jobs:
         run: |
           rm -Force ~/.gradle/caches/modules-2/modules-2.lock
           rm -Force ~/.gradle/caches/modules-2/gc.properties
+      - name: Upload package file
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: build/packages/*.exe
