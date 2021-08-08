@@ -35,7 +35,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew packageForLinux
+        run: ./gradlew jpackage
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
@@ -61,7 +61,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Build with Gradle
-        run: ./gradlew.bat packageForWin
+        run: ./gradlew.bat jpackageForWindows
       - name: Cleanup Gradle Cache
         run: |
           rm -Force ~/.gradle/caches/modules-2/modules-2.lock

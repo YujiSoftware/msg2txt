@@ -41,7 +41,27 @@ jar {
     }
 }
 
-task packageForWin(group: 'build', description: 'Packaging self-contained Java applications fow Windows.', type: Exec) {
+task jpackage(group: 'build', description: 'Packaging self-contained Java applications.', type: Exec) {
+    dependsOn "jar"
+    inputs.dir file("${buildDir}/libs")
+    outputs.dir file("${buildDir}/packages")
+
+    commandLine (
+            "jpackage",
+            "--name", "msg2txt",
+            "--app-version", version,
+            "--input", "${buildDir}/libs",
+            "--main-jar", "msg2txt-" + version + ".jar",
+            "--dest", "${buildDir}/packages",
+            "--verbose",
+    )
+
+    doFirst {
+        delete fileTree("${buildDir}/packages")
+    }
+}
+
+task jpackageForWindows(group: 'build', description: 'Packaging self-contained Java applications for Windows.', type: Exec) {
     dependsOn "jar"
     inputs.dir file("${buildDir}/libs")
     outputs.dir file("${buildDir}/packages")
@@ -55,26 +75,6 @@ task packageForWin(group: 'build', description: 'Packaging self-contained Java a
             "--dest", "${buildDir}/packages",
             "--win-console",
             "--win-shortcut",
-            "--verbose",
-    )
-
-    doFirst {
-        delete fileTree("${buildDir}/packages")
-    }
-}
-
-task packageForLinux(group: 'build', description: 'Packaging self-contained Java applications for Linux.', type: Exec) {
-    dependsOn "jar"
-    inputs.dir file("${buildDir}/libs")
-    outputs.dir file("${buildDir}/packages")
-
-    commandLine (
-            "jpackage",
-            "--name", "msg2txt",
-            "--app-version", version,
-            "--input", "${buildDir}/libs",
-            "--main-jar", "msg2txt-" + version + ".jar",
-            "--dest", "${buildDir}/packages",
             "--verbose",
     )
 
