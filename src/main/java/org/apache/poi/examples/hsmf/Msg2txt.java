@@ -35,6 +35,9 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(name = "msg2txt")
 public class Msg2txt implements Callable<Integer> {
 
+    @CommandLine.Option(names = {"-o", "--output", "/o"}, description = "output directory")
+    Path outputDir;
+
     @CommandLine.Parameters(paramLabel = "FILE")
     private List<Path> paths;
 
@@ -70,6 +73,11 @@ public class Msg2txt implements Callable<Integer> {
 
         String txtFileName = name + ".txt";
         String attDirName = name + "-att";
+        if (outputDir != null) {
+            txtFileName = outputDir.resolve(Path.of(txtFileName).getFileName()).toString();
+            attDirName = outputDir.resolve(Path.of(attDirName).getFileName()).toString();
+        }
+
         try (PrintWriter txtOut = new PrintWriter(txtFileName, "UTF-8")) {
             try {
                 String displayFrom = msg.getDisplayFrom();
