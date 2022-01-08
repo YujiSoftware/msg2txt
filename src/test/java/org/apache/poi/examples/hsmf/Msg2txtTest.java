@@ -56,9 +56,9 @@ public class Msg2txtTest {
         int exitCode = run(RESOURCES + "example_received_unicode.msg");
 
         assertEquals(0, exitCode);
-        assertTrue(Files.isRegularFile(Path.of(RESOURCES, "example_received_unicode.txt")));
-        assertTrue(Files.isDirectory(Path.of(RESOURCES, "example_received_unicode-att")));
-        assertTrue(Files.isRegularFile(Path.of(RESOURCES, "example_received_unicode-att", "alfresco.gif")));
+        assertTrue(Files.isRegularFile(Paths.get(RESOURCES, "example_received_unicode.txt")));
+        assertTrue(Files.isDirectory(Paths.get(RESOURCES, "example_received_unicode-att")));
+        assertTrue(Files.isRegularFile(Paths.get(RESOURCES, "example_received_unicode-att", "alfresco.gif")));
     }
 
     @Test
@@ -66,8 +66,8 @@ public class Msg2txtTest {
         int exitCode = run(RESOURCES + "simple_test_msg_1.msg", RESOURCES + "simple_test_msg_2.msg");
 
         assertEquals(0, exitCode);
-        assertTrue(Files.isRegularFile(Path.of(RESOURCES, "simple_test_msg_1.txt")));
-        assertTrue(Files.isRegularFile(Path.of(RESOURCES, "simple_test_msg_2.txt")));
+        assertTrue(Files.isRegularFile(Paths.get(RESOURCES, "simple_test_msg_1.txt")));
+        assertTrue(Files.isRegularFile(Paths.get(RESOURCES, "simple_test_msg_2.txt")));
     }
 
     @ParameterizedTest
@@ -78,7 +78,7 @@ public class Msg2txtTest {
         assertEquals(0, exitCode);
         assertTrue(Files.isRegularFile(temp.resolve("example_received_unicode.txt")));
         assertTrue(Files.isDirectory(temp.resolve("example_received_unicode-att")));
-        assertTrue(Files.isRegularFile(temp.resolve(Path.of("example_received_unicode-att", "alfresco.gif"))));
+        assertTrue(Files.isRegularFile(temp.resolve(Paths.get("example_received_unicode-att", "alfresco.gif"))));
     }
 
     @ParameterizedTest
@@ -87,8 +87,8 @@ public class Msg2txtTest {
         int exitCode = run(arg, RESOURCES + "example_received_unicode.msg");
 
         assertEquals(0, exitCode);
-        assertTrue(Files.isRegularFile(Path.of(RESOURCES, "example_received_unicode.txt")));
-        assertTrue(Files.notExists(Path.of(RESOURCES, "example_received_unicode-att")));
+        assertTrue(Files.isRegularFile(Paths.get(RESOURCES, "example_received_unicode.txt")));
+        assertTrue(Files.notExists(Paths.get(RESOURCES, "example_received_unicode-att")));
     }
 
     @ParameterizedTest
@@ -97,8 +97,8 @@ public class Msg2txtTest {
         int exitCode = run(arg, RESOURCES + "example_received_unicode.msg");
 
         assertEquals(0, exitCode);
-        assertTrue(Files.notExists(Path.of(RESOURCES, "example_received_unicode.txt")));
-        assertTrue(Files.notExists(Path.of(RESOURCES, "example_received_unicode-att")));
+        assertTrue(Files.notExists(Paths.get(RESOURCES, "example_received_unicode.txt")));
+        assertTrue(Files.notExists(Paths.get(RESOURCES, "example_received_unicode-att")));
     }
 
     @Test

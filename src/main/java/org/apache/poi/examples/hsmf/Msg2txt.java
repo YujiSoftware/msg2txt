@@ -24,6 +24,7 @@ import picocli.CommandLine;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -80,8 +81,8 @@ public class Msg2txt implements Callable<Integer> {
         String txtFileName = name + ".txt";
         String attDirName = name + "-att";
         if (outputDir != null) {
-            txtFileName = outputDir.resolve(Path.of(txtFileName).getFileName()).toString();
-            attDirName = outputDir.resolve(Path.of(attDirName).getFileName()).toString();
+            txtFileName = outputDir.resolve(Paths.get(txtFileName).getFileName()).toString();
+            attDirName = outputDir.resolve(Paths.get(attDirName).getFileName()).toString();
         }
 
         try (PrintWriter txtOut = new PrintWriter(txtFileName, "UTF-8")) {
