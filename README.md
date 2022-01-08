@@ -8,12 +8,13 @@ Compatible with macOS / Linux / Windows.
 ## Download
 
 * Installer (including Java runtime, it will be installed automatically)
-    * For macOS: [msg2txt-1.0.0.dmg](https://github.com/YujiSoftware/msg2txt/releases/download/1.0.0/msg2txt-1.0.0.dmg)
-    * For Windows: [msg2txt-1.0.0.exe](https://github.com/YujiSoftware/msg2txt/releases/download/1.0.0/msg2txt-1.0.0.exe)
-    * For Linux: [msg2txt_1.0.0-1_amd64.deb](https://github.com/YujiSoftware/msg2txt/releases/download/1.0.0/msg2txt_1.0.0-1_amd64.deb)
+  * For macOS: [msg2txt-1.1.0.dmg](https://github.com/YujiSoftware/msg2txt/releases/download/1.1.0/msg2txt-1.1.0.dmg)
+  * For Windows: [msg2txt-1.1.0.exe](https://github.com/YujiSoftware/msg2txt/releases/download/1.1.0/msg2txt-1.1.0.exe)
+  * For
+    Linux: [msg2txt_1.1.0-1_amd64.deb](https://github.com/YujiSoftware/msg2txt/releases/download/1.1.0/msg2txt_1.1.0-1_amd64.deb)
 * Standalone (**not** including Java runtime)
-    * zip: [msg2txt-1.0.0.zip](https://github.com/YujiSoftware/msg2txt/releases/download/1.0.0/msg2txt-1.0.0.zip)
-    * tar: [msg2txt-1.0.0.tar](https://github.com/YujiSoftware/msg2txt/releases/download/1.0.0/msg2txt-1.0.0.tar)
+  * zip: [msg2txt-1.1.0.zip](https://github.com/YujiSoftware/msg2txt/releases/download/1.1.0/msg2txt-1.1.0.zip)
+  * tar: [msg2txt-1.1.0.tar](https://github.com/YujiSoftware/msg2txt/releases/download/1.1.0/msg2txt-1.1.0.tar)
 
 ## How to use (GUI)
 

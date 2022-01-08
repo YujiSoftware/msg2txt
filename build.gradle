@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.apache.poi.examples.hsmf'
-version '1.0.0'
+version '1.1.0'
 
 mainClassName = "org.apache.poi.examples.hsmf.Msg2txt"
 
