@@ -44,7 +44,7 @@ public class Msg2txt implements Callable<Integer> {
     @CommandLine.Option(names = {"-t", "--text-only", "/t"}, description = "extract text only (not extract attachments)", defaultValue = "false")
     boolean textOnly;
 
-    @CommandLine.Parameters(paramLabel = "FILE")
+    @CommandLine.Parameters(paramLabel = "FILE", arity = "1..*")
     private List<Path> paths;
 
     @Override

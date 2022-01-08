@@ -101,6 +101,13 @@ public class Msg2txtTest {
         assertTrue(Files.notExists(Path.of(RESOURCES, "example_received_unicode-att")));
     }
 
+    @Test
+    public void missingFileArgument() {
+        int exitCode = run();
+
+        assertEquals(2, exitCode);
+    }
+
     private int run(String... args) {
         return new CommandLine(new Msg2txt()).execute(args);
     }
