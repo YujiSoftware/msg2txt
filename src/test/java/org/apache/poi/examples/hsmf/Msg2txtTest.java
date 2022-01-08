@@ -81,6 +81,26 @@ public class Msg2txtTest {
         assertTrue(Files.isRegularFile(temp.resolve(Path.of("example_received_unicode-att", "alfresco.gif"))));
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"-t", "--text-only", "/t"})
+    public void textOnly(String arg) {
+        int exitCode = run(arg, RESOURCES + "example_received_unicode.msg");
+
+        assertEquals(0, exitCode);
+        assertTrue(Files.isRegularFile(Path.of(RESOURCES, "example_received_unicode.txt")));
+        assertTrue(Files.notExists(Path.of(RESOURCES, "example_received_unicode-att")));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"-h", "--help", "/?"})
+    public void help(String arg) {
+        int exitCode = run(arg, RESOURCES + "example_received_unicode.msg");
+
+        assertEquals(0, exitCode);
+        assertTrue(Files.notExists(Path.of(RESOURCES, "example_received_unicode.txt")));
+        assertTrue(Files.notExists(Path.of(RESOURCES, "example_received_unicode-att")));
+    }
+
     private int run(String... args) {
         return new CommandLine(new Msg2txt()).execute(args);
     }

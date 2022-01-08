@@ -35,8 +35,14 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(name = "msg2txt")
 public class Msg2txt implements Callable<Integer> {
 
+    @CommandLine.Option(names = {"-h", "--help", "/?"}, description = "show this help", usageHelp = true)
+    boolean showHelp;
+
     @CommandLine.Option(names = {"-o", "--output", "/o"}, description = "output directory")
     Path outputDir;
+
+    @CommandLine.Option(names = {"-t", "--text-only", "/t"}, description = "extract text only (not extract attachments)", defaultValue = "false")
+    boolean textOnly;
 
     @CommandLine.Parameters(paramLabel = "FILE")
     private List<Path> paths;
@@ -116,15 +122,17 @@ public class Msg2txt implements Callable<Integer> {
                 System.err.println("No message body");
             }
 
-            AttachmentChunks[] attachments = msg.getAttachmentFiles();
-            if (attachments.length > 0) {
-                File d = new File(attDirName);
-                if (d.mkdir()) {
-                    for (AttachmentChunks attachment : attachments) {
-                        processAttachment(attachment, d);
+            if (!textOnly) {
+                AttachmentChunks[] attachments = msg.getAttachmentFiles();
+                if (attachments.length > 0) {
+                    File d = new File(attDirName);
+                    if (d.mkdir()) {
+                        for (AttachmentChunks attachment : attachments) {
+                            processAttachment(attachment, d);
+                        }
+                    } else {
+                        System.err.println("Can't create directory " + attDirName);
                     }
-                } else {
-                    System.err.println("Can't create directory " + attDirName);
                 }
             }
         }
