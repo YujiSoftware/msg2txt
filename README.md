@@ -47,6 +47,15 @@ C:\Program Files\msg2txt\msg2txt.exe <.msg file>
 bin/msg2txt <.msg file>
 ```
 
+## Options
+
+* `/o <outputDir>`, `-o <outputDir>`, `--output=<outputDir>`
+  * Specify the output directory
+* `/t`, `-t`, `--text-only`
+  * Extract text only (not extract attachments)
+* `/?`, `-h`, `--help`
+  * Show help
+
 ## Icon
 
 https://www.iconpacks.net/free-icon/mail-1015.html
