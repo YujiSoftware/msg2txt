@@ -22,46 +22,57 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.apache.poi.hsmf.MAPIMessage;
 import org.apache.poi.hsmf.datatypes.AttachmentChunks;
 import org.apache.poi.hsmf.exceptions.ChunkNotFoundException;
+import picocli.CommandLine;
 
 /**
  * Reads one or several Outlook MSG files and for each of them creates
  * a text file from available chunks and a directory that contains
  * attachments.
  */
-@SuppressWarnings({"java:S106","java:S4823"})
-public class Msg2txt {
+@CommandLine.Command(name = "msg2txt")
+public class Msg2txt implements Callable<Integer> {
 
-    /**
-     * The stem used to create file names for the text file and the directory
-     * that contains the attachments.
-     */
-    private String fileNameStem;
+    @CommandLine.Parameters(paramLabel = "FILE")
+    private List<Path> paths;
 
-    /**
-     * The Outlook MSG file being processed.
-     */
-    private MAPIMessage msg;
-
-    public Msg2txt(String fileName) throws IOException {
-        fileNameStem = fileName;
-        if(fileNameStem.endsWith(".msg") || fileNameStem.endsWith(".MSG")) {
-            fileNameStem = fileNameStem.substring(0, fileNameStem.length() - 4);
+    @Override
+    public Integer call() {
+        boolean ok = true;
+        for (Path path : paths) {
+            String fileName = path.toString();
+            try {
+                processMessage(fileName);
+            } catch (IOException e) {
+                System.err.println("Could not process " + fileName + ": " + e);
+                ok = false;
+            }
         }
-        msg = new MAPIMessage(fileName);
+
+        return ok ? 0 : 1;
     }
 
     /**
      * Processes the message.
      *
      * @throws IOException if an exception occurs while writing the message out
+     * @param fileName file name
      */
-    public void processMessage() throws IOException {
-        String txtFileName = fileNameStem + ".txt";
-        String attDirName = fileNameStem + "-att";
+    private void processMessage(String fileName) throws IOException {
+        MAPIMessage msg = new MAPIMessage(fileName);
+
+        String name = fileName;
+        if(fileName.endsWith(".msg") || fileName.endsWith(".MSG")) {
+            name = fileName.substring(0, fileName.length() - 4);
+        }
+        String txtFileName = name + ".txt";
+        String attDirName = name + "-att";
         try (PrintWriter txtOut = new PrintWriter(txtFileName, "UTF-8")) {
             try {
                 String displayFrom = msg.getDisplayFrom();
@@ -122,7 +133,7 @@ public class Msg2txt {
      * @param dir the directory in which to write the attachment file
      * @throws IOException when any of the file operations fails
      */
-    public void processAttachment(AttachmentChunks attachment,
+    private void processAttachment(AttachmentChunks attachment,
                                   File dir) throws IOException {
         String fileName = attachment.getAttachFileName().toString();
         if(attachment.getAttachLongFileName() != null) {
@@ -141,19 +152,7 @@ public class Msg2txt {
      * @param args the list of MSG files to process
      */
     public static void main(String[] args) {
-        if(args.length <= 0) {
-            System.err.println("No files names provided");
-        } else {
-            for (String arg : args) {
-                try {
-                    Msg2txt processor = new Msg2txt(arg);
-                    processor.processMessage();
-                } catch (IOException e) {
-                    System.err.println("Could not process " + arg + ": " + e);
-                }
-            }
-        }
+        System.exit(new CommandLine(new Msg2txt()).execute(args));
     }
-
 }
 
