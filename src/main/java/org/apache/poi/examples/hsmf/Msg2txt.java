@@ -17,19 +17,15 @@
 
 package org.apache.poi.examples.hsmf;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.concurrent.Callable;
-
 import org.apache.poi.hsmf.MAPIMessage;
 import org.apache.poi.hsmf.datatypes.AttachmentChunks;
 import org.apache.poi.hsmf.exceptions.ChunkNotFoundException;
 import picocli.CommandLine;
+
+import java.io.*;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * Reads one or several Outlook MSG files and for each of them creates
@@ -61,16 +57,17 @@ public class Msg2txt implements Callable<Integer> {
     /**
      * Processes the message.
      *
-     * @throws IOException if an exception occurs while writing the message out
      * @param fileName file name
+     * @throws IOException if an exception occurs while writing the message out
      */
     private void processMessage(String fileName) throws IOException {
         MAPIMessage msg = new MAPIMessage(fileName);
 
         String name = fileName;
-        if(fileName.endsWith(".msg") || fileName.endsWith(".MSG")) {
+        if (fileName.endsWith(".msg") || fileName.endsWith(".MSG")) {
             name = fileName.substring(0, fileName.length() - 4);
         }
+
         String txtFileName = name + ".txt";
         String attDirName = name + "-att";
         try (PrintWriter txtOut = new PrintWriter(txtFileName, "UTF-8")) {
@@ -130,13 +127,13 @@ public class Msg2txt implements Callable<Integer> {
      * writes it to disk as an individual file.
      *
      * @param attachment the chunk group describing the attachment
-     * @param dir the directory in which to write the attachment file
+     * @param dir        the directory in which to write the attachment file
      * @throws IOException when any of the file operations fails
      */
     private void processAttachment(AttachmentChunks attachment,
-                                  File dir) throws IOException {
+                                   File dir) throws IOException {
         String fileName = attachment.getAttachFileName().toString();
-        if(attachment.getAttachLongFileName() != null) {
+        if (attachment.getAttachLongFileName() != null) {
             fileName = attachment.getAttachLongFileName().toString();
         }
 
